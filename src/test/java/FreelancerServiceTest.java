@@ -1,33 +1,20 @@
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import ru.netology.services.FreelancerService;
-
 
 public class FreelancerServiceTest {
 
-    @Test
-    public void testCalculateExample1() {
+    @ParameterizedTest
+    @CsvSource({
+            "10000, 3000, 20000, 3", // Первый набор данных: доход, траты, порог, ожидаемый результат
+            "100000, 60000, 150000, 2" // Второй набор данных: доход, траты, порог, ожидаемый результат
+    })
+    public void testCalculate(int income, int expenses, int threshold, int expected) {
         FreelancerService service = new FreelancerService();
-        int income = 10000; // Ежемесячный доход
-        int expenses = 3000; // Ежемесячные траты
-        int threshold = 20000; // Порог для отдыха
-
-        int expected = 3; // Ожидаемое количество месяцев отдыха
-        int actual = service.calculate(income, expenses, threshold); // Фактический результат
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testCalculateExample2() {
-        FreelancerService service = new FreelancerService();
-        int income = 100000; // Ежемесячный доход
-        int expenses = 60000; // Ежемесячные траты
-        int threshold = 150000; // Порог для отдыха
-
-        int expected = 2; // Ожидаемое количество месяцев отдыха
-        int actual = service.calculate(income, expenses, threshold); // Фактический результат
-
+        // Фактический результат
+        int actual = service.calculate(income, expenses, threshold);
+        // Сравнение ожидаемого и фактического результатов
         Assertions.assertEquals(expected, actual);
     }
 }
